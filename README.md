@@ -1,6 +1,6 @@
 # Auth0 app for storing & managing users
 
-
+-
 This Python application connects with the Auth0 database and allows you to create, read, update 
 & delete users from the database. This app can be used in CLI as well as on web. 
 

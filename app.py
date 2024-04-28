@@ -121,6 +121,18 @@ def delete_user_by_email(email):
 
 
 # Flask API routes
+@app.route('/', methods=['GET'])
+def home():
+    return jsonify({
+        "routes": [
+            "GET  /users, Get all users in database",
+            "POST  /user, Create a new user",
+            "GET  /user?email=test@example.com, Get a specific user using email",
+            "PATCH  /user, Update user details like email or password",
+            "DELETE  /user?email=test@example.com, Delete user"
+        ]
+    }), 200
+
 @app.route('/user', methods=['POST'])
 def create_user_route():
     data = request.get_json()
