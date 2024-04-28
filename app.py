@@ -183,8 +183,10 @@ def cli():
 
     update_parser = subparsers.add_parser('update-user', help='Update a user by email')
     update_parser.add_argument('--email', help='Email address of the user')
-    update_parser.add_argument('--new-email', help='New email address of the user')
-    update_parser.add_argument('--new-password', help='New password of the user')
+    update_parser.add_argument('--new-email', help='New email address of the user. Enter only one field to '
+                                                   'be updated at a time')
+    update_parser.add_argument('--new-password', help='New password of the user. Enter only one field to '
+                                                      'be updated at a time')
 
     delete_parser = subparsers.add_parser('delete-user', help='Delete a user by email')
     delete_parser.add_argument('--email', help='Email address of the user')
