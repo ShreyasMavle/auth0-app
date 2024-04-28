@@ -85,14 +85,14 @@ def get_all_users():
 
 def update_user_by_email(email, new_email=None, new_password=None):
     user = get_user_by_email(email)
-    if user and user[0] == 200:
+    if user[0] and user[1] == 200:
         url = f"https://{AUTH0_DOMAIN}/api/v2/users/{user[0]['user_id']}"
         headers['Authorization'] = f'Bearer {get_access_token()}'
 
         payload = {}
         if new_email:
             payload['email'] = new_email
-        if new_password:
+        elif new_password:
             payload['password'] = new_password
         response = requests.patch(url, data=json.dumps(payload), headers=headers)
         if response.status_code == 200:
@@ -154,6 +154,8 @@ def update_user_route():
     if not email:
         return jsonify({'error': 'Email is required'}), 400
     result, status_code = update_user_by_email(email, new_email, new_password)
+    if not result:
+        return jsonify({'error': 'User not found'}), 404
     return jsonify(result), status_code
 
 
