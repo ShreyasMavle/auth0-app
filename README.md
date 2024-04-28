@@ -2,8 +2,20 @@
 
 
 This Python application connects with the Auth0 database and allows you to create, read, update 
-& delete users from the database. This app can be used in CLI as well as on web. To use it as CLI
-app:
+& delete users from the database. This app can be used in CLI as well as on web. 
+
+## API documentation
+
+| HTTP Method | Endpoints                      | Action                                     |
+|-------------|--------------------------------|--------------------------------------------|
+| GET         | `/users`                       | Get all users in database                  |
+| POST        | `/user`                        | Create a new user                          |
+| GET         | `/user?email=test@example.com` | Get a specific user using email            |
+| PATCH       | `/user`                        | Update user details like email or password |
+| DELETE      | `/user?email=test@example.com` | Delete user                                |
+
+
+## Using it as a CLI app
 
 ### Get all users in database:
 
