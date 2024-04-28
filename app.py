@@ -173,8 +173,8 @@ def cli():
     subparsers = parser.add_subparsers(dest='command', help='Command to execute')
 
     create_parser = subparsers.add_parser('create-user', help='Create a user')
-    create_parser.add_argument('email', help='Email address of the user')
-    create_parser.add_argument('password', help='Password of the user')
+    create_parser.add_argument('--email', help='Email address of the user')
+    create_parser.add_argument('--password', help='Password of the user')
 
     get_parser = subparsers.add_parser('get-user', help='Get a user by email')
     get_parser.add_argument('--email', help='Email address of the user')
