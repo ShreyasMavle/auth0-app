@@ -16,7 +16,7 @@ spec:
       - name: auth0-app
         # Replace $LOCATION with your Artifact Registry location (e.g., us-west1).
         # Replace $GCLOUD_PROJECT with your project ID.
-        image: asia-south1-docker.pkg.dev/auth0-app-421718/auth0-app-repo/auth0-app-gke:0.0.1
+        image: asia-south1-docker.pkg.dev/auth0-app-421718/auth0-app-repo/auth0-app-gke:0.0.3
         # This app listens on port 8080 for web traffic by default.
         ports:
         - containerPort: 8080

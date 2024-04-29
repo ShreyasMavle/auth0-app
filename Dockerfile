@@ -7,7 +7,6 @@ COPY . /app
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-EXPOSE 5000
 
 # If additional arguments are passed with docker run, it will be used as a CLI app
 # Otherwise, it will run a Flask app

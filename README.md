@@ -8,7 +8,8 @@ This Python application connects with the Auth0 database and allows you to creat
 
 | HTTP Method | Endpoints                      | Action                                           |
 |-------------|--------------------------------|--------------------------------------------------|
-| GET         | `/users`                       | Get all users in database                        |
+| GET         | `/`                            | List all the routes available                    |
+| GET         | `/users`                       | Get all the users in database                    |
 | POST        | `/user`                        | Create a new user                                |
 | GET         | `/user?email=test@example.com` | Get a specific user using email                  |
 | PATCH       | `/user`                        | Update user details like email, password or name |

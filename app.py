@@ -237,4 +237,4 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         cli()
     else:
-        app.run(host='0.0.0.0')
+        app.run(host='0.0.0.0', port=int(os.getenv('PORT', 8080)))
