@@ -142,7 +142,7 @@ def create_user_route():
     data = request.get_json()
     if 'email' not in data or 'password' not in data:
         return jsonify({'error': 'Email and password are required'}), 400
-    result, status_code = create_user(data['email'], data['password'], data['name'])
+    result, status_code = create_user(data['email'], data['password'], data.get('name'))
     return jsonify(result), status_code
 
 
