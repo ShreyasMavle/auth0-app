@@ -2,7 +2,7 @@
 
 
 This Python application connects with the Auth0 database and allows you to create, read, update 
-& delete users from the database. This app can be used in CLI as well as on web. 
+& delete users from the database. It can be used as a CLI or a web app. 
 
 ## API documentation
 
@@ -33,11 +33,23 @@ This Python application connects with the Auth0 database and allows you to creat
 
     python app.py update-user --email test@example.com --new-email test1@example.com
 
-    python app.py update-user --email test1@example.com --new_password test1@example.com
+    python app.py update-user --email test1@example.com --new-password test1@example.com
 
 ### Delete user
 
     python app.py delete-user --email test1@example.com
 
+## Deployment
 
+Build & run the flask app locally, exposing it on port 8080
+
+    docker build -t auth0-app .
+    docker run --name auth0 --rm -p 8080:8080 -it --env-file .env auth0-app
+
+To use it as a CLI app instead, add your arguments
+
+    docker run --name auth0 --rm --env-file .env auth0-app --get-all-users
+
+
+The app is deployed on Google Kubernetes Engine (GKE) cluster. To access it, head over to http://34.93.75.134/
 

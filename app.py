@@ -46,9 +46,8 @@ def create_user(email, password):
     response = requests.post(url, data=json.dumps(payload), headers=headers)
     if response.status_code == 201:
         return {'message': 'User created successfully'}, 201
-    else:
-        error_message = response.json().get("message", 'Failed to create user')
-        return {'error': error_message}, response.status_code
+    error_message = response.json().get("message", 'Failed to create user')
+    return {'error': error_message}, response.status_code
 
 
 def get_user_by_email(email):
@@ -132,6 +131,7 @@ def home():
             "DELETE  /user?email=test@example.com, Delete user"
         ]
     }), 200
+
 
 @app.route('/user', methods=['POST'])
 def create_user_route():
@@ -227,4 +227,4 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         cli()
     else:
-        app.run(host='0.0.0.0', port=int(os.getenv('PORT', 5000)))
+        app.run(host='0.0.0.0', port=int(os.getenv('PORT', 8080)))
