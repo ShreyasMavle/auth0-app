@@ -154,6 +154,8 @@ def get_user_route():
     if not email:
         return jsonify({'error': 'Email is required'}), 400
     result, status_code = get_user_by_email(email)
+    if not result:
+        return jsonify({'error': 'User not found'}), 404
     return jsonify(result), status_code
 
 

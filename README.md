@@ -46,10 +46,11 @@ Build & run the flask app locally, exposing it on port 8080
     docker build -t auth0-app .
     docker run --name auth0 --rm -p 8080:8080 -it --env-file .env auth0-app
 
-To use it as a CLI app instead, add your arguments
+To use it as a CLI app instead, add CLI arguments at the end
 
     docker run --name auth0 --rm --env-file .env auth0-app --get-all-users
+    docker run --name auth0 --rm --env-file .env auth0-app get-user --email test1@test.com
 
 
-The app is deployed on Google Kubernetes Engine (GKE) cluster. To access it, head over to http://34.93.75.134/
+The app is deployed on Google Kubernetes Engine (GKE) cluster in `asia-south1` region. To access it, head over to http://34.93.75.134/
 
