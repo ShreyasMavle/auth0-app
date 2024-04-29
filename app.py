@@ -34,7 +34,7 @@ def get_access_token():
         return None
 
 
-def create_user(email, password):
+def create_user(email, password, name=None):
     url = f'https://{AUTH0_DOMAIN}/api/v2/users'
     headers['Authorization'] = f'Bearer {get_access_token()}'
 
@@ -43,6 +43,8 @@ def create_user(email, password):
         'password': password,
         'connection': 'Username-Password-Authentication'
     }
+    if name:
+        payload['name'] = name
     response = requests.post(url, data=json.dumps(payload), headers=headers)
     if response.status_code == 201:
         return {'message': 'User created successfully'}, 201
@@ -82,7 +84,7 @@ def get_all_users():
         return {'error': error_message}, response.status_code
 
 
-def update_user_by_email(email, new_email=None, new_password=None):
+def update_user_by_email(email, new_email=None, new_password=None, new_name=None):
     user = get_user_by_email(email)
     if user[0] and user[1] == 200:
         url = f"https://{AUTH0_DOMAIN}/api/v2/users/{user[0]['user_id']}"
@@ -93,6 +95,8 @@ def update_user_by_email(email, new_email=None, new_password=None):
             payload['email'] = new_email
         elif new_password:
             payload['password'] = new_password
+        elif new_name:
+            payload['name'] = new_name
         response = requests.patch(url, data=json.dumps(payload), headers=headers)
         if response.status_code == 200:
             return {'message': 'User updated successfully'}, 200
@@ -138,7 +142,7 @@ def create_user_route():
     data = request.get_json()
     if 'email' not in data or 'password' not in data:
         return jsonify({'error': 'Email and password are required'}), 400
-    result, status_code = create_user(data['email'], data['password'])
+    result, status_code = create_user(data['email'], data['password'], data['name'])
     return jsonify(result), status_code
 
 
@@ -165,9 +169,10 @@ def update_user_route():
     email = data.get('email')
     new_email = data.get('new_email')
     new_password = data.get('new_password')
+    new_name = data.get('new_name')
     if not email:
         return jsonify({'error': 'Email is required'}), 400
-    result, status_code = update_user_by_email(email, new_email, new_password)
+    result, status_code = update_user_by_email(email, new_email, new_password, new_name)
     if not result:
         return jsonify({'error': 'User not found'}), 404
     return jsonify(result), status_code
@@ -189,21 +194,24 @@ def cli():
     subparsers = parser.add_subparsers(dest='command', help='Command to execute')
 
     create_parser = subparsers.add_parser('create-user', help='Create a user')
-    create_parser.add_argument('--email', help='Email address of the user')
-    create_parser.add_argument('--password', help='Password of the user')
+    create_parser.add_argument('--email', help='Email address of the user', required=True)
+    create_parser.add_argument('--password', help='Password of the user', required=True)
+    create_parser.add_argument('--name', help='Name of the user. It is optional')
 
     get_parser = subparsers.add_parser('get-user', help='Get a user by email')
-    get_parser.add_argument('--email', help='Email address of the user')
+    get_parser.add_argument('--email', help='Email address of the user', required=True)
 
     update_parser = subparsers.add_parser('update-user', help='Update a user by email')
-    update_parser.add_argument('--email', help='Email address of the user')
+    update_parser.add_argument('--email', help='Email address of the user', required=True)
     update_parser.add_argument('--new-email', help='New email address of the user. Enter only one field to '
                                                    'be updated at a time')
     update_parser.add_argument('--new-password', help='New password of the user. Enter only one field to '
                                                       'be updated at a time')
+    update_parser.add_argument('--new-name', help='New name of the user. Enter only one field to '
+                                                  'be updated at a time')
 
     delete_parser = subparsers.add_parser('delete-user', help='Delete a user by email')
-    delete_parser.add_argument('--email', help='Email address of the user')
+    delete_parser.add_argument('--email', help='Email address of the user', required=True)
 
     parser.add_argument('--get-all-users', action='store_true', dest='get_all_users', help='Get all users')
 
@@ -213,11 +221,11 @@ def cli():
     if args.get_all_users:
         result, _ = get_all_users()
     elif args.command == 'create-user':
-        result, _ = create_user(args.email, args.password)
+        result, _ = create_user(args.email, args.password, args.name)
     elif args.command == 'get-user':
         result, _ = get_user_by_email(args.email)
     elif args.command == 'update-user':
-        result, _ = update_user_by_email(args.email, args.new_email, args.new_password)
+        result, _ = update_user_by_email(args.email, args.new_email, args.new_password, args.new_name)
     elif args.command == 'delete-user':
         result, _ = delete_user_by_email(args.email)
 
@@ -229,4 +237,4 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         cli()
     else:
-        app.run(host='0.0.0.0', port=int(os.getenv('PORT', 8080)))
+        app.run(host='0.0.0.0')
