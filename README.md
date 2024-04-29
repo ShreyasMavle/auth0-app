@@ -6,13 +6,13 @@ This Python application connects with the Auth0 database and allows you to creat
 
 ## API documentation
 
-| HTTP Method | Endpoints                      | Action                                     |
-|-------------|--------------------------------|--------------------------------------------|
-| GET         | `/users`                       | Get all users in database                  |
-| POST        | `/user`                        | Create a new user                          |
-| GET         | `/user?email=test@example.com` | Get a specific user using email            |
-| PATCH       | `/user`                        | Update user details like email or password |
-| DELETE      | `/user?email=test@example.com` | Delete user                                |
+| HTTP Method | Endpoints                      | Action                                           |
+|-------------|--------------------------------|--------------------------------------------------|
+| GET         | `/users`                       | Get all users in database                        |
+| POST        | `/user`                        | Create a new user                                |
+| GET         | `/user?email=test@example.com` | Get a specific user using email                  |
+| PATCH       | `/user`                        | Update user details like email, password or name |
+| DELETE      | `/user?email=test@example.com` | Delete user                                      |
 
 
 ## Using it as a CLI app
@@ -29,15 +29,21 @@ This Python application connects with the Auth0 database and allows you to creat
 
     python app.py get-user --email test@example.com
 
-### Update user details like email or password:
+### Update user details like email, password or name. Only one field can be changed at a time:
 
     python app.py update-user --email test@example.com --new-email test1@example.com
 
     python app.py update-user --email test1@example.com --new-password test1@example.com
 
+    python app.py update-user --email test1@abc.com --new-name TEST1
+
 ### Delete user
 
     python app.py delete-user --email test1@example.com
+
+To get help with CLI commands, use the --help flag
+
+    python app.py --help
 
 ## Deployment
 
