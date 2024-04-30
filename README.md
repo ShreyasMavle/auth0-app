@@ -15,6 +15,52 @@ This Python application connects with the Auth0 database and allows you to creat
 | PATCH       | `/user`                        | Update user details like email, password or name |
 | DELETE      | `/user?email=test@example.com` | Delete user                                      |
 
+### Request Body (Content-Type: application/json)
+
+#### Create a new user
+
+`POST /user`
+
+'email' & 'password' are required & 'name' is optional
+
+    {
+        "email": "test5@abc.com",
+        "password": "Test@1234"
+        "name": "Test3"
+    }
+
+#### Update user
+
+`PATCH /user`
+
+'email' is required. Only enter one field at a time that needs to be updated 
+
+_Update email_
+
+    {
+        "email": "test5@abc.com",
+        "new_email": "test55@abc.com"
+    }
+
+_Update name_
+
+    {
+        "email": "test5@abc.com",
+        "new_name": "TEST55"
+    }
+
+### Response (Content-Type: application/json)
+
+
+| Status Code | Description             |
+|:------------|:------------------------|
+| 200         | `OK`                    |
+| 201         | `CREATED`               |
+| 400         | `BAD REQUEST`           |
+| 404         | `NOT FOUND`             |
+| 500         | `INTERNAL SERVER ERROR` |
+
+
 
 ## Using it as a CLI app
 
